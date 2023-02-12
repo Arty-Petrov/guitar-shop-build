@@ -1,0 +1,28 @@
+# Users
+# @name CREATE A NEW USER
+POST {{baseUrl}}/auth/register HTTP/1.1
+Content-Type: application/json
+
+{
+  "name": "Keks-Client",
+  "email": "client20@notfound.local",
+  "password": "123456"
+}
+###
+# @name LOGIN USER
+POST {{baseUrl}}/auth/login HTTP/1.1
+Content-Type: application/json
+
+{
+  "email": "client20@notfound.local",
+  "password": "23456"
+}
+> {%
+  client.log(request.body())
+  client.global.set("accessToken", response.body.access_token);
+%}
+###
+# @name CHECK USER STATUS
+GET {{baseUrl}}/auth/login HTTP/1.1
+Authorization: Bearer {{accessToken}}
+###
