@@ -3,19 +3,26 @@
  * This is only a minimal backend to get started.
  */
 
-import { Logger } from '@nestjs/common';
+import { Logger, ValidationPipe } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 
 import { AppModule } from './app/app.module';
+import { getRabbitMqConfig } from './config/rabbitmq.config';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  const globalPrefix = 'api';
-  app.setGlobalPrefix(globalPrefix);
-  const port = process.env.PORT || 3333;
-  await app.listen(port);
+  const configService = app.get<ConfigService>(ConfigService);
+  app.connectMicroservice(getRabbitMqConfig.Product(configService));
+
+  await app.startAllMicroservices();
+
+  app.useGlobalPipes(new ValidationPipe({
+    skipUndefinedProperties: true
+  }));
+  await app.init();
   Logger.log(
-    `🚀 Application is running on: http://localhost:${port}/${globalPrefix}`
+    `🚀 Product application is running`
   );
 }
 

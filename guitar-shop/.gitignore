@@ -3,6 +3,7 @@
 # compiled output
 dist
 db
+migrations
 tmp
 /out-tsc
 

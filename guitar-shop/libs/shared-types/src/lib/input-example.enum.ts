@@ -6,6 +6,7 @@ export const InputExample = {
   Number: '10',
   Price: '1500',
   PictureFile: `{ url: /images/image.png, image: image.png, }`,
+  PictureUrl: `/images/image.png`,
   MongoId: '63aac1a8d0fe043efd78f0b3',
   PostgreId: '043536428286379763',
   Password: '123456',
